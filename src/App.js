@@ -91,7 +91,7 @@ function Home() {
     };
 
     const timer = setInterval(() => {
-      if (Date.now() - lastClickTime > 3000) {
+      if (Date.now() - lastClickTime > 1850) {
         resetProgressBar();
       }
     }, 500);
