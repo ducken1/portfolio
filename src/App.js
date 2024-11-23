@@ -1,8 +1,142 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import Confetti from 'react-confetti';
+import * as THREE from 'three';
+
+// Custom Shader Material for Rainbow Effect
+const RainbowShaderMaterial = {
+  uniforms: {
+    time: { value: 0 },
+  },
+  vertexShader: `
+    varying vec2 vUv;
+
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    varying vec2 vUv;
+    uniform float time;
+
+    void main() {
+      // Speed up the color transition by multiplying time
+      float speedFactor = 6.0;  // Increase this value to make the transition faster
+      float frequency = 10.0;   // More frequency components for more segments
+
+      // Red, Green, Blue components with faster transitions
+      float r = abs(sin(vUv.y * frequency - time * 0.5 * speedFactor));  // Red component
+      float g = abs(sin(vUv.y * frequency - time * 0.5 * speedFactor + 2.0));  // Green component
+      float b = abs(sin(vUv.y * frequency - time * 0.5 * speedFactor + 4.0));  // Blue component
+
+      // Smooth the transitions
+      float smoothR = smoothstep(0.0, 1.0, r);
+      float smoothG = smoothstep(0.0, 1.0, g);
+      float smoothB = smoothstep(0.0, 1.0, b);
+
+      // Output the final color with smooth transitions
+      gl_FragColor = vec4(smoothR, smoothG, smoothB, 1.0);
+    }
+  `,
+};
+
+
+function RainbowTrail() {
+  const trailRef = useRef();
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+
+  // Track cursor position
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setCursorPos({
+        x: (e.clientX / window.innerWidth) * 2 - 1,
+        y: -(e.clientY / window.innerHeight) * 2 + 1,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Animate the beam
+  useFrame(({ camera, clock }) => {
+    if (trailRef.current) {
+      // Convert cursor position to 3D world coordinates
+      const vector = new THREE.Vector3(cursorPos.x, cursorPos.y, 0.99);
+      vector.unproject(camera);
+
+      const distance = vector.distanceTo(camera.position);
+      
+      
+      vector.z += distance;
+
+      //const offset = new THREE.Vector3(0, distance / 100, 0.25);
+      trailRef.current.position.copy(vector);
+    
+      trailRef.current.rotation.x = Math.PI / 2; 
+      trailRef.current.rotation.y = 0;  // Rotate around Y-axis
+
+      const taperFactor = Math.min(2.5, Math.max(0.5, distance * 0.1));
+      // Adjust the beam's length dynamically
+      trailRef.current.scale.set(taperFactor, distance , taperFactor); // Scale in Y-axis matches half the distance
+
+      // Update shader time for rainbow effect
+      trailRef.current.material.uniforms.time.value = clock.getElapsedTime();
+
+    }
+  });
+
+
+  return (
+    <mesh ref={trailRef} >
+      {/* Cylinder geometry with dynamic length */}
+      <cylinderGeometry args={[0.02, 0.02, 2, 32]} />
+      <shaderMaterial attach="material" {...RainbowShaderMaterial}/>
+      
+    </mesh>
+  );
+}
+
+
+
+function Background() {
+  const gridRef = useRef();
+  const lightRef = useRef();
+  const [lightAngle, setLightAngle] = useState(0);
+
+  useFrame(() => {
+    if (gridRef.current) {
+      // Rotate the grid slightly for movement
+      gridRef.current.rotation.x += 0.000;
+      gridRef.current.rotation.y += 0.0005;
+    }
+    if (lightRef.current) {
+      // Make the light rotate around the scene
+      setLightAngle((prev) => (prev + 0.01) % (Math.PI * 2));
+      lightRef.current.position.x = Math.sin(lightAngle) * 5;
+      lightRef.current.position.z = Math.cos(lightAngle) * 5;
+    }
+    
+  });
+
+  return (
+    <>
+      {/* Grid with glowing effect */}
+      <gridHelper
+        ref={gridRef}
+        args={[50, 60, '#8A2BE2', '#1E90FF',]} // size, divisions, color1, color2
+        position={[0, -1, 0]}
+        scale={[2, 2, 2]}
+      />
+      {/* Rotating light source */}
+      <pointLight ref={lightRef} intensity={1.5} color="#ff00ff" />
+    </>
+  );
+}
 
 function Duck({ color, resetKey }) {
   const { scene } = useGLTF('/3D-assets/duck.glb'); // Load the duck model
@@ -133,12 +267,33 @@ function Home() {
       }}
       onClick={handleClick}
     >
-      <Canvas camera={{ position: [0, 0.35, 0.8] }}>
+      <Canvas camera={{ position: [0, 0.35, 0.8] }} >
+      <Background />
+
         <ambientLight intensity={1.5} />
         <directionalLight position={[5, 5, 10]} />
         <OrbitControls enableZoom={false} enableRotate={false} enablePan={false} />
         <Duck color={duckColor} resetKey={resetKey} />
       </Canvas>
+
+      {/* RainbowTrail Canvas */}
+
+      <Canvas
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none', // Ensure this canvas does not block interactions
+          zIndex: 1, // Place above buttons
+        }}
+        camera={{ position: [0, 0.35, 0.8] }}
+      >
+        <RainbowTrail />
+      </Canvas>
+
+
 
       {quackText.map(({ id, position, offsetY }) => (
         <div
