@@ -308,7 +308,7 @@ function Home() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
+          height: '70%',
           zIndex: 1,
         }}
       >
