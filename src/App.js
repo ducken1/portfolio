@@ -4,6 +4,26 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import Confetti from 'react-confetti';
 import * as THREE from 'three';
+import CLOUDS from "vanta/dist/vanta.clouds.min";
+
+const useVantaEffect = () => {
+  const vantaRef = useRef(null);
+
+  useEffect(() => {
+    const vantaEffect = CLOUDS({
+      el: vantaRef.current, // Apply the effect to this element
+      THREE, // Pass Three.js
+      skyColor: 0x87CEEB     , // Adjust sky color if needed
+      cloudColor: 0xF0F8FF  , // Cloud color
+      speed: 1.1, // Cloud movement speed
+    });
+    return () => {
+      if (vantaEffect) vantaEffect.destroy(); // Cleanup Vanta.js effect on unmount
+    };
+  }, []);
+
+  return vantaRef;
+};
 
 // Custom Shader Material for Rainbow Effect
 const RainbowShaderMaterial = {
@@ -108,11 +128,25 @@ function Background() {
   const lightRef = useRef();
   const [lightAngle, setLightAngle] = useState(0);
 
+  const gridSpeed = 0.005; // Adjust speed of grid movement
+  const gridLength = 50; // Length of the grid in the z-direction
+
   useFrame(() => {
     if (gridRef.current) {
       // Rotate the grid slightly for movement
-      gridRef.current.rotation.x += 0.000;
-      gridRef.current.rotation.y += 0.0005;
+      gridRef.current.rotation.x += 0.00;
+      gridRef.current.rotation.y += 0.000;
+      gridRef.current.rotation.z += 0.00;
+
+      gridRef.current.position.x = -0.9;
+      gridRef.current.position.y = -0.5;
+      gridRef.current.position.z += gridSpeed;
+      
+
+            // Reset position when it has moved a full grid length
+            if (gridRef.current.position.z >= gridLength / 2) {
+              gridRef.current.position.z -= gridLength; // Reset to create looping effect
+            }
     }
     if (lightRef.current) {
       // Make the light rotate around the scene
@@ -128,10 +162,11 @@ function Background() {
       {/* Grid with glowing effect */}
       <gridHelper
         ref={gridRef}
-        args={[50, 60, '#8A2BE2', '#1E90FF',]} // size, divisions, color1, color2
-        position={[0, -1, 0]}
+        args={[gridLength, 60, '#8A2BE2', '#1E90FF']} // size, divisions, color1, color2
+        position={[0, 0, 0]}
         scale={[2, 2, 2]}
       />
+
       {/* Rotating light source */}
       <pointLight ref={lightRef} intensity={1.5} color="#ff00ff" />
     </>
@@ -143,6 +178,14 @@ function Duck({ color, resetKey }) {
   const duckRef = useRef();
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const initialColor = useRef({});
+
+  useEffect(() => {
+    if (duckRef.current) {
+      duckRef.current.position.y = -0.4
+
+
+    }
+  }, []);
 
   useEffect(() => {
     if (scene && Object.keys(initialColor.current).length === 0) {
@@ -171,7 +214,8 @@ function Duck({ color, resetKey }) {
       // Rotate duck based on mouse position
       const { x, y } = mouse;
       duckRef.current.rotation.y = -Math.PI / 2 + x * Math.PI / 4;
-      duckRef.current.rotation.x = -y * Math.PI / 8;
+      duckRef.current.rotation.x = (-y * Math.PI / 8) + 0.1;
+
     }
   }, [mouse]);
 
@@ -202,9 +246,10 @@ function Duck({ color, resetKey }) {
     }
   }, [resetKey, scene]);
 
-  scene.position.y = -0.15;
 
-  return <primitive ref={duckRef} object={scene} scale={3} />;
+ // scene.position.y = -0.05;
+
+  return <primitive ref={duckRef} object={scene} scale={0.7} />;
 }
 
 function Home() {
@@ -216,6 +261,8 @@ function Home() {
   const [progress, setProgress] = useState(0);
   const [lastClickTime, setLastClickTime] = useState(Date.now());
   const [resetKey, setResetKey] = useState(0);
+
+  const vantaRef = useVantaEffect(); // Hook to initialize Vanta.js effect
 
   useEffect(() => {
     const resetProgressBar = () => {
@@ -258,6 +305,8 @@ function Home() {
   };
 
   return (
+
+
     <div
       style={{
         position: 'relative',
@@ -267,8 +316,74 @@ function Home() {
       }}
       onClick={handleClick}
     >
+
+      {/* Vanta.js Background */}
+      <div
+        ref={vantaRef} // Vanta.js effect is applied to this div
+        style={{
+          height: '100vh',
+          width: '100vw',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 0, // Keep background behind other content
+        }}
+      />
+
+            {/* Cool Animated Text: Luka Lašič */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '10%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontSize: '50px',
+          fontWeight: 'bold',
+          color: '#fffff', // Softer yellow-orange color
+          textShadow: '0 0 5px #32a852, 0 0 30px #32a852', // Adjust shadow to match new color
+          animation: 'glow 1.5s ease-in-out infinite alternate',
+        }}
+      >
+        duckeN
+      </div>
+
+      {/* GitHub Button */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '20%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '20px',
+          zIndex: 2,
+        }}
+      >
+        <a href="https://github.com/ducken1" target="_blank" rel="noopener noreferrer">
+          <button
+            style={{
+              padding: '15px 30px',
+              fontSize: '18px',
+              cursor: 'pointer',
+              backgroundColor: '#24292F',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={(e) => (e.target.style.transform = 'scale(1.2)')}
+            onMouseLeave={(e) => (e.target.style.transform = 'scale(1) ')}
+          >
+            GitHub
+          </button>
+        </a>
+      </div>
+
       <Canvas camera={{ position: [0, 0.35, 0.8] }} >
-      <Background />
+
+       {/*<Background /> */}
 
         <ambientLight intensity={1.5} />
         <directionalLight position={[5, 5, 10]} />
@@ -292,6 +407,8 @@ function Home() {
       >
         <RainbowTrail />
       </Canvas>
+
+
 
 
 
@@ -352,56 +469,56 @@ function Home() {
       </div>
 
       <div
-        style={{
-          position: 'absolute',
-          top: '42%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          display: 'flex',
-          gap: '500px',
-        }}
+  style={{
+    position: 'absolute',
+    top: '30%',  // Adjusted for proper spacing under GitHub button
+    left: '50%',
+    transform: 'translateX(-50%)',
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '20px',  // Space between buttons
+    zIndex: 2,
+  }}
       >
-        <Link to="/csharp">
-          <button
-            style={{
-              padding: '15px 30px',
-              fontSize: '18px',
-              cursor: 'pointer',
-              backgroundColor: '#0078D7',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              transform: 'rotate(-15deg)',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={(e) => (e.target.style.transform = 'scale(1.05) rotate(-15deg)')}
-            onMouseLeave={(e) => (e.target.style.transform = 'scale(1) rotate(-15deg)')}
-          >
-            C#
-          </button>
-        </Link>
+  <Link to="/csharp">
+    <button
+      style={{
+        padding: '15px 30px',
+        fontSize: '18px',
+        cursor: 'pointer',
+        backgroundColor: '#0078D7',
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        transition: 'all 0.3s ease',
+      }}
+      onMouseEnter={(e) => (e.target.style.transform = 'scale(1.2)')}
+      onMouseLeave={(e) => (e.target.style.transform = 'scale(1) ')}
+    >
+      C#
+    </button>
+  </Link>
 
-        <Link to="/javascript">
-          <button
-            style={{
-              padding: '15px 30px',
-              fontSize: '18px',
-              cursor: 'pointer',
-              backgroundColor: '#F7DF1E',
-              color: 'black',
-              border: 'none',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              transform: 'rotate(15deg)',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={(e) => (e.target.style.transform = 'scale(1.05) rotate(15deg)')}
-            onMouseLeave={(e) => (e.target.style.transform = 'scale(1) rotate(15deg)')}
-          >
-            JS
-          </button>
-        </Link>
+  <Link to="/javascript">
+    <button
+      style={{
+        padding: '15px 30px',
+        fontSize: '18px',
+        cursor: 'pointer',
+        backgroundColor: '#F7DF1E',
+        color: 'black',
+        border: 'none',
+        borderRadius: '8px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        transition: 'all 0.3s ease',
+      }}
+      onMouseEnter={(e) => (e.target.style.transform = 'scale(1.2) ')}
+      onMouseLeave={(e) => (e.target.style.transform = 'scale(1) ')}
+    >
+      JS
+    </button>
+  </Link>
       </div>
 
       <style>
