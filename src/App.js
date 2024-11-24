@@ -317,7 +317,7 @@ function Home() {
   style={{
     width: '60%',
     maxWidth: '500px',
-    height: '350px', // Increased height
+    height: '250px', // Increased height
     padding: '10px',
     backgroundColor: 'rgba(0, 0, 0, 0.85)',
     border: '1px solid transparent',
@@ -365,7 +365,7 @@ function Home() {
   style={{
     width: '30%',
     maxWidth: '300px',
-    height: '350px', // Increased height
+    height: '250px', // Increased height
     padding: '10px',
     marginLeft: '20px',
     backgroundColor: 'rgba(0, 0, 0, 0.85)',
