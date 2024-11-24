@@ -566,6 +566,11 @@ function Home() {
             user-select: none;
           }
 
+html, body {
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+}
+          
           @keyframes flyUp {
             0% {
               transform: translateY(0);
