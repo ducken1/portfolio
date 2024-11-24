@@ -412,8 +412,15 @@ function Home() {
           textAlign: 'center',
           transition: 'all 0.3s ease',
         }}
-        onMouseEnter={(e) => (e.target.style.backgroundColor = '#fff', e.target.style.color = '#000')}
-        onMouseLeave={(e) => (e.target.style.backgroundColor = 'transparent', e.target.style.color = '#fff')}
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = '#fff';
+          e.target.style.color = '#000'
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = 'transparent';
+           e.target.style.color = '#fff'
+        }
+        }
       >
         GitHub
       </button>
@@ -433,8 +440,14 @@ function Home() {
           textAlign: 'center',
           transition: 'all 0.3s ease',
         }}
-        onMouseEnter={(e) => (e.target.style.backgroundColor = '#fff', e.target.style.color = '#000')}
-        onMouseLeave={(e) => (e.target.style.backgroundColor = 'transparent', e.target.style.color = '#fff')}
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = '#fff';
+          e.target.style.color = '#000'
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = 'transparent';
+          e.target.style.color = '#fff'
+        }}
       >
         C#
       </button>
@@ -454,8 +467,14 @@ function Home() {
           textAlign: 'center',
           transition: 'all 0.3s ease',
         }}
-        onMouseEnter={(e) => (e.target.style.backgroundColor = '#fff', e.target.style.color = '#000')}
-        onMouseLeave={(e) => (e.target.style.backgroundColor = 'transparent', e.target.style.color = '#fff')}
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = '#fff';
+           e.target.style.color = '#000'
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = 'transparent';
+           e.target.style.color = '#fff'
+        }}
       >
         JS
       </button>
