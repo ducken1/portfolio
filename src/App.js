@@ -123,56 +123,6 @@ function RainbowTrail() {
 
 
 
-function Background() {
-  const gridRef = useRef();
-  const lightRef = useRef();
-  const [lightAngle, setLightAngle] = useState(0);
-
-  const gridSpeed = 0.005; // Adjust speed of grid movement
-  const gridLength = 50; // Length of the grid in the z-direction
-
-  useFrame(() => {
-    if (gridRef.current) {
-      // Rotate the grid slightly for movement
-      gridRef.current.rotation.x += 0.00;
-      gridRef.current.rotation.y += 0.000;
-      gridRef.current.rotation.z += 0.00;
-
-      gridRef.current.position.x = -0.9;
-      gridRef.current.position.y = -0.5;
-      gridRef.current.position.z += gridSpeed;
-      
-
-            // Reset position when it has moved a full grid length
-            if (gridRef.current.position.z >= gridLength / 2) {
-              gridRef.current.position.z -= gridLength; // Reset to create looping effect
-            }
-    }
-    if (lightRef.current) {
-      // Make the light rotate around the scene
-      setLightAngle((prev) => (prev + 0.01) % (Math.PI * 2));
-      lightRef.current.position.x = Math.sin(lightAngle) * 5;
-      lightRef.current.position.z = Math.cos(lightAngle) * 5;
-    }
-    
-  });
-
-  return (
-    <>
-      {/* Grid with glowing effect */}
-      <gridHelper
-        ref={gridRef}
-        args={[gridLength, 60, '#8A2BE2', '#1E90FF']} // size, divisions, color1, color2
-        position={[0, 0, 0]}
-        scale={[2, 2, 2]}
-      />
-
-      {/* Rotating light source */}
-      <pointLight ref={lightRef} intensity={1.5} color="#ff00ff" />
-    </>
-  );
-}
-
 function Duck({ color, resetKey }) {
   const { scene } = useGLTF('/3D-assets/duck.glb'); // Load the duck model
   const duckRef = useRef();
