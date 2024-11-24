@@ -66,27 +66,38 @@ const RainbowShaderMaterial = {
 
 function RainbowTrail() {
   const trailRef = useRef();
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
   // Track cursor position
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setCursorPos({
+      setMouse({
         x: (e.clientX / window.innerWidth) * 2 - 1,
         y: -(e.clientY / window.innerHeight) * 2 + 1,
       });
     };
+    const handleTouchMove = (e) => {
+      const touch = e.touches[0];
+      setMouse({
+        x: (touch.clientX / window.innerWidth) * 2 - 1,
+        y: -(touch.clientY / window.innerHeight) * 2 + 1,
+      });
+    };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+    }
   }, []);
 
   // Animate the beam
   useFrame(({ camera, clock }) => {
     if (trailRef.current) {
       // Convert cursor position to 3D world coordinates
-      const vector = new THREE.Vector3(cursorPos.x, cursorPos.y, 0.99);
+      const vector = new THREE.Vector3(mouse.x, mouse.y, 0.99);
       vector.unproject(camera);
 
       const distance = vector.distanceTo(camera.position);
