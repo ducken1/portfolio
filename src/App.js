@@ -164,7 +164,7 @@ function Duck({ color, resetKey }) {
       // Rotate duck based on mouse position
       const { x, y } = mouse;
       duckRef.current.rotation.y = -Math.PI / 2 + x * Math.PI / 4;
-      duckRef.current.rotation.x = (-y * Math.PI / 8) + 0.1;
+      duckRef.current.rotation.x = (-y * Math.PI / 8) - 0.3;
 
     }
   }, [mouse]);
@@ -307,7 +307,7 @@ function Home() {
           display: 'flex',
           justifyContent: 'center',
           gap: '20px',
-          zIndex: 2,
+          zIndex: 1,
         }}
       >
         <a href="https://github.com/ducken1" target="_blank" rel="noopener noreferrer">
@@ -427,7 +427,7 @@ function Home() {
     display: 'flex',
     justifyContent: 'center',
     gap: '20px',  // Space between buttons
-    zIndex: 2,
+    zIndex: 0,
   }}
       >
   <Link to="/csharp">
