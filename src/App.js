@@ -155,8 +155,19 @@ function Duck({ color, resetKey }) {
         y: -(e.clientY / window.innerHeight) * 2 + 1,
       });
     };
+    const handleTouchMove = (e) => {
+      const touch = e.touches[0];
+      setMouse({
+        x: (touch.clientX / window.innerWidth) * 2 - 1,
+        y: -(touch.clientY / window.innerHeight) * 2 + 1,
+      });
+    };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    return () =>  {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+    }
   }, []);
 
   useEffect(() => {
