@@ -44,8 +44,8 @@ const RainbowShaderMaterial = {
 
     void main() {
       // Speed up the color transition by multiplying time
-      float speedFactor = 6.0;  // Increase this value to make the transition faster
-      float frequency = 10.0;   // More frequency components for more segments
+      float speedFactor = 10.0;  // Increase this value to make the transition faster
+      float frequency = 6.0;   // More frequency components for more segments
 
       // Red, Green, Blue components with faster transitions
       float r = abs(sin(vUv.y * frequency - time * 0.5 * speedFactor));  // Red component
@@ -58,7 +58,8 @@ const RainbowShaderMaterial = {
       float smoothB = smoothstep(0.0, 1.0, b);
 
       // Output the final color with smooth transitions
-      gl_FragColor = vec4(smoothR, smoothG, smoothB, 1.0);
+      gl_FragColor = vec4(smoothR, smoothG, smoothB, 0.8);
+
     }
   `,
 };
@@ -67,6 +68,7 @@ const RainbowShaderMaterial = {
 function RainbowTrail() {
   const trailRef = useRef();
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  
 
   // Track cursor position
   useEffect(() => {
@@ -105,8 +107,14 @@ function RainbowTrail() {
       
       vector.z += distance;
 
+      
+      const currentPosition = trailRef.current.position;
+
+      
+      currentPosition.lerp(vector, 0.3); 
+      
       //const offset = new THREE.Vector3(0, distance / 100, 0.25);
-      trailRef.current.position.copy(vector);
+
     
       trailRef.current.rotation.x = Math.PI / 2; 
       trailRef.current.rotation.y = 0;  // Rotate around Y-axis
@@ -125,7 +133,7 @@ function RainbowTrail() {
   return (
     <mesh ref={trailRef} >
       {/* Cylinder geometry with dynamic length */}
-      <cylinderGeometry args={[0.02, 0.02, 2, 32]} />
+      <cylinderGeometry args={[0.15, 0.02, 2, 32]} />
       <shaderMaterial attach="material" {...RainbowShaderMaterial}/>
       
     </mesh>
@@ -142,7 +150,7 @@ function Duck({ color, resetKey }) {
 
   useEffect(() => {
     if (duckRef.current) {
-      duckRef.current.position.y = -0.4
+      duckRef.current.position.y = -0.8
 
 
     }
@@ -230,22 +238,17 @@ function Home() {
   const [confettiPosition, setConfettiPosition] = useState({ x: 0, y: 0 });
   const [quackCount, setQuackCount] = useState(0);
   const [duckColor, setDuckColor] = useState(null);
-  const [progress, setProgress] = useState(0);
   const [lastClickTime, setLastClickTime] = useState(Date.now());
   const [resetKey, setResetKey] = useState(0);
 
   const vantaRef = useVantaEffect(); // Hook to initialize Vanta.js effect
 
   useEffect(() => {
-    const resetProgressBar = () => {
-      setQuackCount(0);
-      setProgress(0);
-      setResetKey((prev) => prev + 1);
-    };
 
     const timer = setInterval(() => {
       if (Date.now() - lastClickTime > 1850) {
-        resetProgressBar();
+        setQuackCount(0);
+        setResetKey((prev) => prev + 1);
       }
     }, 500);
 
@@ -263,9 +266,6 @@ function Home() {
 
     const redValue = Math.min(100, (newCount / 10) * 100);
     setDuckColor(`rgb(${redValue}, 0, 0)`);
-
-    const newProgress = Math.min(100, (newCount / 10) * 100);
-    setProgress(newProgress);
 
     setConfettiPosition(position);
     setTimeout(() => {
@@ -302,58 +302,181 @@ function Home() {
         }}
       />
 
-            {/* Cool Animated Text: Luka Lašič */}
-      <div
+            {/* Main Container for the Cards */}
+            <div
         style={{
-          position: 'absolute',
-          top: '10%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          fontSize: '50px',
-          fontWeight: 'bold',
-          color: '#fffff', // Softer yellow-orange color
-          textShadow: '0 0 5px #32a852, 0 0 30px #32a852', // Adjust shadow to match new color
-          animation: 'glow 1.5s ease-in-out infinite alternate',
-        }}
-      >
-        duckeN
-      </div>
-
-      {/* GitHub Button */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '20%',
-          left: '50%',
-          transform: 'translateX(-50%)',
           display: 'flex',
           justifyContent: 'center',
-          gap: '20px',
+          alignItems: 'center',
+          height: '100vh',
           zIndex: 1,
         }}
       >
-        <a href="https://github.com/ducken1" target="_blank" rel="noopener noreferrer">
-          <button
-            style={{
-              padding: '15px 30px',
-              fontSize: '18px',
-              cursor: 'pointer',
-              backgroundColor: '#24292F',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={(e) => (e.target.style.transform = 'scale(1.2)')}
-            onMouseLeave={(e) => (e.target.style.transform = 'scale(1) ')}
-          >
-            GitHub
-          </button>
-        </a>
-      </div>
+{/* Updated Left Card */}
+<div
+  style={{
+    width: '60%',
+    maxWidth: '500px',
+    height: '350px', // Increased height
+    padding: '10px',
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    border: '1px solid transparent',
+    borderRadius: '20px',
+    boxShadow: '0px 15px 25px rgba(0, 0, 0, 0.6)',
+    backgroundImage: 'linear-gradient(to bottom right, #333, #111), linear-gradient(to bottom right, #ff8a00, #e52e71)',
+    backgroundOrigin: 'border-box',
+    backgroundClip: 'content-box, border-box',
+    transform: 'translateZ(0) scale(1)',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = 'translateZ(10px) scale(1.05)';
+    e.currentTarget.style.boxShadow = '0px 20px 40px rgba(0, 0, 0, 0.8)';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = 'translateZ(0) scale(1)';
+    e.currentTarget.style.boxShadow = '0px 15px 25px rgba(0, 0, 0, 0.6)';
+  }}
+>
+  <h1
+    style={{
+      fontSize: '36px',
+      color: '#fff',
+      margin: 0,
+      textAlign: 'center',
+    }}
+  >
+    Luka Lašič
+  </h1>
+  <p
+    style={{
+      color: '#ddd',
+      textAlign: 'center',
+      marginTop: '20px',
+      fontSize: '18px',
+    }}
+  >
+    A passionate Computer Science major with a love for coding, exploring new technologies, and building innovative projects.
+  </p>
+</div>
 
-      <Canvas camera={{ position: [0, 0.35, 0.8] }} >
+{/* Updated Right Card */}
+<div
+  style={{
+    width: '30%',
+    maxWidth: '300px',
+    height: '350px', // Increased height
+    padding: '10px',
+    marginLeft: '20px',
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    border: '1px solid transparent',
+    borderRadius: '20px',
+    boxShadow: '0px 15px 25px rgba(0, 0, 0, 0.6)',
+    backgroundImage: 'linear-gradient(to bottom right, #333, #111), linear-gradient(to bottom right, #8e2de2, #4a00e0)',
+    backgroundOrigin: 'border-box',
+    backgroundClip: 'content-box, border-box',
+    transform: 'translateZ(0) scale(1)',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+    display: 'flex', // Add flexbox to center content
+    justifyContent: 'center', // Center horizontally
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = 'translateZ(10px) scale(1.05)';
+    e.currentTarget.style.boxShadow = '0px 20px 40px rgba(0, 0, 0, 0.8)';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = 'translateZ(0) scale(1)';
+    e.currentTarget.style.boxShadow = '0px 15px 25px rgba(0, 0, 0, 0.6)';
+  }}
+>
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '15px',
+      marginTop: '20px'
+    }}
+  >
+    <a href="https://github.com/ducken1" target="_blank" rel="noopener noreferrer">
+      <button
+        style={{
+          padding: '12px',
+          fontSize: '18px',
+          width: '100px', // Ensure all buttons have the same width
+          height: '50px', // Ensure all buttons have the same height
+          cursor: 'pointer',
+          backgroundColor: 'transparent',
+          color: '#fff',
+          border: '2px solid #fff',
+          borderRadius: '8px',
+          textAlign: 'center',
+          transition: 'all 0.3s ease',
+        }}
+        onMouseEnter={(e) => (e.target.style.backgroundColor = '#fff', e.target.style.color = '#000')}
+        onMouseLeave={(e) => (e.target.style.backgroundColor = 'transparent', e.target.style.color = '#fff')}
+      >
+        GitHub
+      </button>
+    </a>
+    <Link to="/csharp">
+      <button
+        style={{
+          padding: '12px',
+          fontSize: '18px',
+          width: '100px', // Ensure all buttons have the same width
+          height: '50px', // Ensure all buttons have the same height
+          cursor: 'pointer',
+          backgroundColor: 'transparent',
+          color: '#fff',
+          border: '2px solid #fff',
+          borderRadius: '8px',
+          textAlign: 'center',
+          transition: 'all 0.3s ease',
+        }}
+        onMouseEnter={(e) => (e.target.style.backgroundColor = '#fff', e.target.style.color = '#000')}
+        onMouseLeave={(e) => (e.target.style.backgroundColor = 'transparent', e.target.style.color = '#fff')}
+      >
+        C#
+      </button>
+    </Link>
+    <Link to="/javascript">
+      <button
+        style={{
+          padding: '12px',
+          fontSize: '18px',
+          width: '100px', // Ensure all buttons have the same width
+          height: '50px', // Ensure all buttons have the same height
+          cursor: 'pointer',
+          backgroundColor: 'transparent',
+          color: '#fff',
+          border: '2px solid #fff',
+          borderRadius: '8px',
+          textAlign: 'center',
+          transition: 'all 0.3s ease',
+        }}
+        onMouseEnter={(e) => (e.target.style.backgroundColor = '#fff', e.target.style.color = '#000')}
+        onMouseLeave={(e) => (e.target.style.backgroundColor = 'transparent', e.target.style.color = '#fff')}
+      >
+        JS
+      </button>
+    </Link>
+  </div>
+</div>
+          </div>
+      
+
+      <Canvas   
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 1, // Ensure the canvas is above the cards
+          pointerEvents: 'none', // Prevent the canvas from blocking clicks
+        }}      
+        camera={{ position: [0, 0.35, 0.8] 
+        }} >
 
        {/*<Background /> */}
 
@@ -381,8 +504,7 @@ function Home() {
       </Canvas>
 
 
-
-
+  
 
       {quackText.map(({ id, position, offsetY }) => (
         <div
@@ -417,81 +539,6 @@ function Home() {
         />
       )}
 
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '10%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '80%',
-          height: '20px',
-          backgroundColor: '#ddd',
-          borderRadius: '10px',
-        }}
-      >
-        <div
-          style={{
-            width: `${progress}%`,
-            height: '100%',
-            backgroundColor: '#F7DF1E',
-            borderRadius: '10px',
-            transition: 'width 0.3s ease-in-out',
-          }}
-        />
-      </div>
-
-      <div
-  style={{
-    position: 'absolute',
-    top: '30%',  // Adjusted for proper spacing under GitHub button
-    left: '50%',
-    transform: 'translateX(-50%)',
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '20px',  // Space between buttons
-    zIndex: 0,
-  }}
-      >
-  <Link to="/csharp">
-    <button
-      style={{
-        padding: '15px 30px',
-        fontSize: '18px',
-        cursor: 'pointer',
-        backgroundColor: '#0078D7',
-        color: 'white',
-        border: 'none',
-        borderRadius: '8px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        transition: 'all 0.3s ease',
-      }}
-      onMouseEnter={(e) => (e.target.style.transform = 'scale(1.2)')}
-      onMouseLeave={(e) => (e.target.style.transform = 'scale(1) ')}
-    >
-      C#
-    </button>
-  </Link>
-
-  <Link to="/javascript">
-    <button
-      style={{
-        padding: '15px 30px',
-        fontSize: '18px',
-        cursor: 'pointer',
-        backgroundColor: '#F7DF1E',
-        color: 'black',
-        border: 'none',
-        borderRadius: '8px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        transition: 'all 0.3s ease',
-      }}
-      onMouseEnter={(e) => (e.target.style.transform = 'scale(1.2) ')}
-      onMouseLeave={(e) => (e.target.style.transform = 'scale(1) ')}
-    >
-      JS
-    </button>
-  </Link>
-      </div>
 
       <style>
         {`
