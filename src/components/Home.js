@@ -146,7 +146,7 @@ animate();
 
 
       
-    {/* <div className="test">Computer Science Graduate</div>*/}  
+     <div className="test">Computer Science Graduate</div>*
       
 
       <div className="neonBorder"></div>

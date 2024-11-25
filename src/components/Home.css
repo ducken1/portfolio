@@ -82,6 +82,12 @@
     z-index: 1;
   }
 
+  @media (min-width: 769px) { /* Targets devices with a width of 769px or more */
+    .test {
+      display: none; /* Hides the element on larger screens */
+    }
+  }
+
   /* Adjust padding for mobile screens */
 @media (max-width: 768px) { /* Targets devices with a width of 768px or less */
   .test {
