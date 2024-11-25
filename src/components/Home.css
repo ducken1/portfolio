@@ -88,7 +88,7 @@
       padding: 0 32.5px; /* Mobile-specific padding */
   }
   #container {
-    padding: 0 32.5px; /* Mobile-specific padding */
+    display:none;
 }
 }
   
