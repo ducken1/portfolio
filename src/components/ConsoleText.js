@@ -76,7 +76,7 @@ useEffect(() => {
 
     // Initialize the console text animation
     consoleText(
-      ['<Code is more than syntax>', '<It\'s shaping the future>', '<Utilizing technologies to craft solutions>', '<Each project sparks innovation and evolution>'],
+      ['<Innovation begins where the semicolon ends>', '<Software engineers: turning caffeine into functions since forever>', '<If code is poetry, we/’re writing an epic every day>', '<Ctrl+C and Ctrl+V — the foundation of modern programming>'],
       'text',
       ['hotpink', 'lightcoral', 'sandybrown', 'indianred']
     );

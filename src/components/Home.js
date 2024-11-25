@@ -47,7 +47,7 @@ function Home() {
      {/* About Me Section */}
      <div className="cardContainer">
         <div className="card">
-          <h3>Pixels & Purpose</h3>
+          <div></div>
           <div className="console-container">
         <span id="text"></span>
         <div className="console-underscore" id="console">
