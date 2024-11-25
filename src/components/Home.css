@@ -47,7 +47,7 @@
     -webkit-text-stroke-width: var(--stroke-width);
     position: absolute;
     top: calc(30px + 10vmin); /* This will position the Stroke below the name */
-    left: 66px;
+    left: 35px;
     z-index: 1;
   }
   
