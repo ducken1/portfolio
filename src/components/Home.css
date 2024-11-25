@@ -137,7 +137,6 @@
   /* Adjust padding for mobile screens */
 @media (max-width: 767px) { /* Targets devices with a width of 768px or less */
   .test {
-    display: none;
       padding: 0 32.5px; /* Mobile-specific padding */
   }
 
@@ -147,7 +146,7 @@
 
   .card {
     left: 0;
-    height: 150px;
+    height: 250px;
     width:350px;
   }
 
@@ -155,6 +154,9 @@
     transform: none;
   }
 
+  #container {
+    display:none;
+}
 }
   
   
