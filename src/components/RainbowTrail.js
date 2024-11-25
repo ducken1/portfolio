@@ -110,7 +110,7 @@ function RainbowTrail() {
   return (
     <mesh ref={trailRef} >
       {/* Cylinder geometry with dynamic length */}
-      <cylinderGeometry args={[0.15, 0.02, 2, 32]} />
+      <cylinderGeometry args={[0.03, 0.02, 2, 32]} />
       <shaderMaterial attach="material" {...RainbowShaderMaterial}/>
       
     </mesh>
