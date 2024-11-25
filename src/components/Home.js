@@ -13,7 +13,7 @@ function Home() {
   const { quackText, duckColor, resetKey, addQuack, setLastClickTime } = QuackHandler();
 
   const vantaRef = VantaBackground();
-
+  
   useEffect(() => {
     const texts = [
       "Frontend Magic",
@@ -23,11 +23,10 @@ function Home() {
       "<3",
     ];
 
-
     const elts = {
       text1: document.getElementById("text1"),
       text2: document.getElementById("text2")
-  };
+    };
 
     const morphTime = 1; // Duration of morphing in seconds
     const cooldownTime = 0.25; // Duration of cooldown in seconds
@@ -38,80 +37,78 @@ function Home() {
     let time = new Date();
 
     elts.text1.textContent = texts[textIndex % texts.length];
-elts.text2.textContent = texts[(textIndex + 1) % texts.length];
+    elts.text2.textContent = texts[(textIndex + 1) % texts.length];
 
-function setMorph(fraction) {
-  elts.text2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
-  elts.text2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+    function setMorph(fraction) {
+      elts.text2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+      elts.text2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
 
-  fraction = 1 - fraction;
-  elts.text1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
-  elts.text1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+      fraction = 1 - fraction;
+      elts.text1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+      elts.text1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
 
-  elts.text1.textContent = texts[textIndex % texts.length];
-  elts.text2.textContent = texts[(textIndex + 1) % texts.length];
-}
+      elts.text1.textContent = texts[textIndex % texts.length];
+      elts.text2.textContent = texts[(textIndex + 1) % texts.length];
+    }
 
+    function doMorph() {
+      morph -= cooldown;
+      cooldown = 0;
 
-function doMorph() {
-  morph -= cooldown;
-  cooldown = 0;
+      let fraction = morph / morphTime;
 
-  let fraction = morph / morphTime;
-
-  if (fraction > 1) {
-      cooldown = cooldownTime;
-      fraction = 1;
-  }
-
-  setMorph(fraction);
-}
-
-function doCooldown() {
-  morph = 0;
-
-  elts.text2.style.filter = "";
-  elts.text2.style.opacity = "100%";
-
-  elts.text1.style.filter = "";
-  elts.text1.style.opacity = "0%";
-}
-
-const maxFramesPerSecond = 30; // Aim for 30 frames per second
-const frameInterval = 1000 / maxFramesPerSecond; // Calculate time between each frame in ms
-let lastFrameTime = 0; // Track the time of the last frame
-
-function animate() {
-  const now = new Date().getTime();
-  const deltaTime = now - lastFrameTime;
-
-  // Only run the animation every "frameInterval" milliseconds
-  if (deltaTime >= frameInterval) {
-    lastFrameTime = now;
-
-    let newTime = new Date();
-    let shouldIncrementIndex = cooldown > 0;
-    let dt = (newTime - time) / 1000; // Get the time difference in seconds
-    time = newTime;
-
-    cooldown -= dt;
-
-    if (cooldown <= 0) {
-      if (shouldIncrementIndex) {
-        textIndex++;
+      if (fraction > 1) {
+        cooldown = cooldownTime;
+        fraction = 1;
       }
 
-      doMorph();
-    } else {
-      doCooldown();
+      setMorph(fraction);
     }
-  }
 
-  // Continue animating
-  requestAnimationFrame(animate);
-}
+    function doCooldown() {
+      morph = 0;
 
-animate();
+      elts.text2.style.filter = "";
+      elts.text2.style.opacity = "100%";
+
+      elts.text1.style.filter = "";
+      elts.text1.style.opacity = "0%";
+    }
+
+    // Throttled animation using requestIdleCallback
+    let lastFrameTime = 0;
+    const frameInterval = 1000 / 30; // 30 FPS
+
+    const animate = () => {
+      const now = new Date().getTime();
+      const deltaTime = now - lastFrameTime;
+
+      if (deltaTime >= frameInterval) {
+        lastFrameTime = now;
+
+        let newTime = new Date();
+        let shouldIncrementIndex = cooldown > 0;
+        let dt = (newTime - time) / 1000;
+        time = newTime;
+
+        cooldown -= dt;
+
+        if (cooldown <= 0) {
+          if (shouldIncrementIndex) {
+            textIndex++;
+          }
+
+          doMorph();
+        } else {
+          doCooldown();
+        }
+      }
+
+      requestIdleCallback(animate); // Run during idle time
+    };
+
+    // Start the animation loop
+    requestIdleCallback(animate);
 
     return () => {
       // Cleanup animation
