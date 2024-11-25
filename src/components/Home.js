@@ -4,6 +4,7 @@ import RainbowTrail from './RainbowTrail';
 import Duck from './Duck';
 import QuackHandler from './QuackHandler';
 import TextMorph from './TextMorph';
+import ConsoleText from './ConsoleText';
 
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -16,6 +17,8 @@ function Home() {
   const vantaRef = VantaBackground();
 
   TextMorph();
+
+ ConsoleText();
   
 
   const handleClick = (e) => {
@@ -41,12 +44,22 @@ function Home() {
   <span id="text2"></span>
 </div>
 
-<div className="cardContainer">
-  <div className="card">
-    <p>blablabla <strong>HEHEHEHE</strong> hihihi.</p>
-    <p className="card-footer">12345</p>
-  </div>
-</div>
+     {/* About Me Section */}
+     <div className="cardContainer">
+        <div className="card">
+          <h3>Pixels & Purpose</h3>
+          <div className="console-container">
+        <span id="text"></span>
+        <div className="console-underscore" id="console">
+          &#95;
+        </div>
+      </div>
+{/*           <p>
+          Code is more than syntax—it's a way to shape the future. With JavaScript, Python, and C#, I craft solutions that bridge ideas to reality. Every project is an opportunity to innovate, refine, and grow
+          </p> */}
+          <p className="card-footer">Maribor / Ptuj / Slovenska Bistrica</p>
+        </div>
+      </div>
         
 <svg id="filters">
         <defs>

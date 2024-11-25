@@ -58,8 +58,9 @@
 }
   
   .card-footer {
-    font-size: 0.65em;
-    color: #446;
+  font-size: 0.75em; /* Slightly larger footer text */
+  color: #d38dfd; /* Bright purple */
+  margin-top: 15px;
   }
 
   .card:hover {
@@ -114,7 +115,7 @@
   .card {
     flex: 1 1 30%; /* Reduce the width percentage to make space for larger cards */
     width: 800px;
-    height: 300px; /* Adjust height for larger content */
+    height: 400px; /* Adjust height for larger content */
     font-size: 1.2em; /* Increase text size for better readability */
   }
   .test {
@@ -129,6 +130,9 @@
     height: 350px;
     font-size: 1.1em; /* Slightly smaller text than larger screens */
   }
+  .console-container {
+    font-size:2em;
+  }
     .test {
       display: none; /* Hides the element on larger screens */
     }
@@ -140,12 +144,15 @@
       padding: 0 32.5px; /* Mobile-specific padding */
   }
 
+  .console-container {
+    font-size:2em;
+  }
+
   .rainbow-trail {
     display: none;
   }
 
   .card {
-    left: 0;
     height: 250px;
     width:300px;
   }
@@ -158,8 +165,7 @@
     display:none;
 }
 }
-  
-  
+   
   .vantaBackground {
     height: 100vh;
     width: 100vw;
@@ -181,59 +187,5 @@
     box-shadow: 0 0 5px rgba(138, 43, 226, 0.8), 0 0 25px rgba(138, 43, 226, 0.5);
     pointer-events: none; /* Ensure the border doesn't block interactions */
   }
-
-
-
-  
-  .leftCard {
-    width: 60%;
-    max-width: 500px;
-    height: 250px;
-    background-image: linear-gradient(to bottom right, #333, #111), linear-gradient(to bottom right, #ff8a00, #e52e71);
-  }
-  
-  .rightCard {
-    width: 30%;
-    max-width: 300px;
-    height: 250px;
-    margin-left: 20px;
-    background-image: linear-gradient(to bottom right, #333, #111), linear-gradient(to bottom right, #8e2de2, #4a00e0);
-  }
-  
-  .flyUp {
-    animation: flyUp 2s forwards;
-  }
-  
-  @keyframes flyUp {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-200px);
-      opacity: 0;
-    }
-  }
-  
-  button {
-    padding: 12px;
-    font-size: 18px;
-    width: 120px;
-    height: 50px;
-    cursor: pointer;
-    background-color: transparent;
-    color: #fff;
-    border: 2px solid #fff;
-    border-radius: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
-    margin: 10px;
-  }
-  
-  button:hover {
-    background-color: #fff;
-    color: #000;
-  }
-
-  
+ 
   
