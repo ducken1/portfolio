@@ -77,7 +77,6 @@ function doCooldown() {
   elts.text1.style.opacity = "0%";
 }
 
-let frameCounter = 0;
 const maxFramesPerSecond = 30; // Aim for 30 frames per second
 const frameInterval = 1000 / maxFramesPerSecond; // Calculate time between each frame in ms
 let lastFrameTime = 0; // Track the time of the last frame
