@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
+
 /* General styles */
 * {
     user-select: none;
@@ -14,6 +16,32 @@
   }
 
 
+  #container {
+    position: absolute;
+    top: calc(30px + 10vmin); /* This will position the Stroke below the name */
+    padding: 0 33.5px; /* Add padding to prevent clipping */
+    left: 0; /* Align with the container's left edge */
+    width: 100vw;
+    height: 40pt;
+    z-index: 1;
+  
+
+
+    filter: url(#threshold) blur(0.6px);
+}
+
+#text1,
+#text2 {
+    position: absolute;
+    width: 100%;
+    color:white;
+    font-family: "Raleway", sans-serif;
+    font-size: 20pt;
+    
+
+    user-select: none;
+}
+
   .container {
     font-size: 10vmin;
     position: absolute;
@@ -29,10 +57,10 @@
   }
 
   :root {
-    --color-background: #000119;
-    --stroke-width: calc(1em / 16);
+    --color-background: #1c1c1c;
+    --stroke-width: calc(2.5em / 16);
     --font-size: 10vmin;
-    --font-weight: 700;
+    --font-weight: 200;
     --letter-spacing: calc(1em / 8);
   }
 
@@ -41,15 +69,28 @@
     background-image: linear-gradient(to right, #09f1b8, #00a2ff, #ff00d2, #fed90f);
     color: #1c1c1c;
     font-size: 3vmin;
-    font-weight: 500;
+    font-weight: 1000;
     letter-spacing: 0em;
     -webkit-text-stroke-color: transparent;
     -webkit-text-stroke-width: var(--stroke-width);
     position: absolute;
     top: calc(30px + 10vmin); /* This will position the Stroke below the name */
-    left: 33.5px;
+    padding: 0 33.5px; /* Add padding to prevent clipping */
+    left: 0; /* Align with the container's left edge */
+
+  
     z-index: 1;
   }
+
+  /* Adjust padding for mobile screens */
+@media (max-width: 768px) { /* Targets devices with a width of 768px or less */
+  .test {
+      padding: 0 32.5px; /* Mobile-specific padding */
+  }
+  #container {
+    padding: 0 32.5px; /* Mobile-specific padding */
+}
+}
   
   
   .vantaBackground {
@@ -60,6 +101,7 @@
     left: 0;
     z-index: 0; /* Keep background behind other content */
   }
+  
   
   .neonBorder {
     position: absolute;
