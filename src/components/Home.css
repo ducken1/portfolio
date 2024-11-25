@@ -123,14 +123,14 @@
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .card {
+    flex: 1 1 40%; /* Medium screen size cards */
+    width: 500px;
+    height: 350px;
+    font-size: 1.1em; /* Slightly smaller text than larger screens */
+  }
     .test {
       display: none; /* Hides the element on larger screens */
-    }
-    .card {
-      flex: 1 1 40%; /* Medium screen size cards */
-      max-width: 500px;
-      min-height: 250px;
-      font-size: 1.1em; /* Slightly smaller text than larger screens */
     }
   }
 
@@ -147,7 +147,7 @@
   .card {
     left: 0;
     height: 250px;
-    width:350px;
+    width:300px;
   }
 
   .card:hover {
