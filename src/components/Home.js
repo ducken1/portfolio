@@ -141,6 +141,12 @@ animate();
       </svg>
 
 
+       {/* Your new card here */}
+       <div className="card">
+          <p> blablabla <strong>HEHEHEHE</strong> hihihi.</p>
+          <p className="card-footer">12345</p>
+        </div>
+
       <div ref={vantaRef} className="vantaBackground"></div>
 
 
