@@ -15,6 +15,24 @@
     background-color: #000; /* Fallback background */
   }
 
+  .github-button {
+    position: absolute;
+    top: 30px; /* Adjust as needed to align with your other elements */
+    right: 30px; /* Positions it in the top-right corner */
+    display: inline-block;
+    z-index: 1; /* Ensure it stays on top of other elements */
+    border: none; /* Removes any borders */
+    padding: 0; /* Removes any padding */
+    cursor: pointer; /* Ensures the pointer changes to a hand icon */
+  }
+  
+  .github-logo {
+    width: 50px; /* Adjust size as needed */
+    height: 50px;
+    object-fit: contain;
+    background-color: transparent !important;
+  }
+
  .cardContainer {
   position: relative;
   display: flex;

@@ -121,6 +121,11 @@ animate();
     <div className="homeContainer" onClick={handleClick}>
       <div className="container">Luka Lašič</div>
 
+        {/* GitHub Button */}
+  <a href="https://github.com/ducken1" target="_blank" rel="noopener noreferrer" className="github-button">
+    <img src="/github-icon.png" alt="GitHub" className="github-logo" />
+  </a>
+
       <div id="container">
   <span id="text1"></span>
   <span id="text2"></span>
