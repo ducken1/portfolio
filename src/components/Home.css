@@ -36,18 +36,12 @@
  .cardContainer {
   position: relative;
   display: flex;
-  gap: 20px; /* Adds space between cards */
   justify-content: center; /* Centers the cards horizontally */
   flex-wrap: wrap; /* Allows cards to wrap to the next row on smaller screens */
   padding: 20px; /* Optional: Adds some padding around the container */
 }
 
 .card {
-  flex: 1 1 45%; /* Each card takes up about 45% of the width (adjust as needed) */
-  max-width: 500px; /* Optional: Ensures card doesn’t exceed 500px width */
-  min-width: 300px; /* Optional: Ensures card doesn’t shrink too much on small screens */
-  min-height: 200px;
-  margin: 10px; /* Adds space around each card */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -73,31 +67,7 @@
     box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.8);
   }
 
-  #container {
-    position: absolute;
-    top: calc(30px + 10vmin); /* This will position the Stroke below the name */
-    padding: 0 33.5px; /* Add padding to prevent clipping */
-    left: 0; /* Align with the container's left edge */
-    width: 100vw;
-    height: 40pt;
-    z-index: 1;
-    will-change: opacity, filter;
 
-
-    filter: url(#threshold) blur(0.6px);
-}
-
-#text1,
-#text2 {
-    position: absolute;
-    width: 100%;
-    color:white;
-    font-family: "Raleway", sans-serif;
-    font-size: 20pt;
-    
-
-    user-select: none;
-}
 
   .container {
     font-size: 10vmin;
@@ -139,15 +109,35 @@
     z-index: 1;
   }
 
-  @media (min-width: 769px) { /* Targets devices with a width of 769px or more */
+  /* Adjust card size for larger screens */
+@media (min-width: 1024px) { /* Targets devices with width 1024px or more */
+  .card {
+    flex: 1 1 30%; /* Reduce the width percentage to make space for larger cards */
+    width: 800px;
+    height: 300px; /* Adjust height for larger content */
+    font-size: 1.2em; /* Increase text size for better readability */
+  }
+  .test {
+    display: none; /* Hides the element on larger screens */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
     .test {
       display: none; /* Hides the element on larger screens */
+    }
+    .card {
+      flex: 1 1 40%; /* Medium screen size cards */
+      max-width: 500px;
+      min-height: 250px;
+      font-size: 1.1em; /* Slightly smaller text than larger screens */
     }
   }
 
   /* Adjust padding for mobile screens */
-@media (max-width: 768px) { /* Targets devices with a width of 768px or less */
+@media (max-width: 767px) { /* Targets devices with a width of 768px or less */
   .test {
+    display: none;
       padding: 0 32.5px; /* Mobile-specific padding */
   }
 
@@ -157,17 +147,14 @@
 
   .card {
     left: 0;
-    min-height: 150px;
-    max-width: 50px;
+    height: 150px;
+    width:350px;
   }
 
   .card:hover {
     transform: none;
   }
 
-  #container {
-    display:none;
-}
 }
   
   

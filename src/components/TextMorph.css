@@ -1,0 +1,25 @@
+#container {
+    position: absolute;
+    top: calc(30px + 10vmin); /* This will position the Stroke below the name */
+    padding: 0 33.5px; /* Add padding to prevent clipping */
+    left: 0; /* Align with the container's left edge */
+    width: 100vw;
+    height: 40pt;
+    z-index: 1;
+    will-change: opacity, filter;
+
+
+    filter: url(#threshold) blur(0.6px);
+}
+
+#text1,
+#text2 {
+    position: absolute;
+    width: 100%;
+    color:white;
+    font-family: "Raleway", sans-serif;
+    font-size: 20pt;
+    
+
+    user-select: none;
+}

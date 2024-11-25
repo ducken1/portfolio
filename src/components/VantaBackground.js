@@ -16,7 +16,7 @@ const VantaBackground = () => {
         quantity: 4,
         birdSize: 0.85,
         wingSpan: 15,
-        speedLimit: 5,
+        speedLimit: 4,
         separation: 30,
         alignment: 15,
         cohesion: 10,
