@@ -1,4 +1,4 @@
-import React, {  useEffect} from 'react';
+import React from 'react';
 import VantaBackground from './VantaBackground';
 import RainbowTrail from './RainbowTrail';
 import Duck from './Duck';
