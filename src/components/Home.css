@@ -24,7 +24,7 @@
     width: 100vw;
     height: 40pt;
     z-index: 1;
-  
+    will-change: opacity, filter;
 
 
     filter: url(#threshold) blur(0.6px);
