@@ -77,25 +77,39 @@ function doCooldown() {
   elts.text1.style.opacity = "0%";
 }
 
+let frameCounter = 0;
+const maxFramesPerSecond = 30; // Aim for 30 frames per second
+const frameInterval = 1000 / maxFramesPerSecond; // Calculate time between each frame in ms
+let lastFrameTime = 0; // Track the time of the last frame
+
 function animate() {
-    requestAnimationFrame(animate);
+  const now = new Date().getTime();
+  const deltaTime = now - lastFrameTime;
+
+  // Only run the animation every "frameInterval" milliseconds
+  if (deltaTime >= frameInterval) {
+    lastFrameTime = now;
 
     let newTime = new Date();
     let shouldIncrementIndex = cooldown > 0;
-    let dt = (newTime - time) / 1000;
+    let dt = (newTime - time) / 1000; // Get the time difference in seconds
     time = newTime;
 
     cooldown -= dt;
 
     if (cooldown <= 0) {
-        if (shouldIncrementIndex) {
-            textIndex++;
-        }
+      if (shouldIncrementIndex) {
+        textIndex++;
+      }
 
-        doMorph();
+      doMorph();
     } else {
-        doCooldown();
+      doCooldown();
     }
+  }
+
+  // Continue animating
+  requestAnimationFrame(animate);
 }
 
 animate();
