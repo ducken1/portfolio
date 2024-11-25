@@ -43,7 +43,6 @@
     font-size: 3vmin;
     font-weight: 500;
     letter-spacing: 0em;
-    padding: calc(--stroke-width / 2);
     -webkit-text-stroke-color: transparent;
     -webkit-text-stroke-width: var(--stroke-width);
     position: absolute;
