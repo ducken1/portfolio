@@ -125,6 +125,10 @@
       padding: 0 32.5px; /* Mobile-specific padding */
   }
 
+  .rainbow-trail {
+    display: none;
+  }
+
   .card {
     position: relative;
     left: 0;

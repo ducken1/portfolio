@@ -180,7 +180,7 @@ animate();
         <OrbitControls enableZoom={false} enableRotate={false} enablePan={false} />
         <Duck color={duckColor} resetKey={resetKey} />
       </Canvas>
-      <Canvas style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }} camera={{ position: [0, 0.35, 0.8] }}>
+      <Canvas className="rainbow-trail" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }} camera={{ position: [0, 0.35, 0.8] }}>
         <RainbowTrail />
       </Canvas>
       {quackText.map(({ id, position, offsetY }) => (
