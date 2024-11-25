@@ -13,7 +13,7 @@ const VantaBackground = () => {
         color1: 0x5d3fd3         , // blue
         color2: 0xff69b4         , // light teal
         colorMode: "varianceGradient",
-        quantity: 5,
+        quantity: 4,
         birdSize: 0.85,
         wingSpan: 15,
         speedLimit: 5,

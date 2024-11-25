@@ -1,14 +1,9 @@
 import React, {} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home'
+import CSharpProject from './pages/CSharpProject';
+import JavaScriptProject from './pages/JavaScriptProject';
 
-function CSharpProject() {
-  return <div style={{ padding: '20px' }}>This is the C# project!</div>;
-}
-
-function JavaScriptProject() {
-  return <div style={{ padding: '20px' }}>This is the JS project!</div>;
-}
 
 function App() {
   return (
