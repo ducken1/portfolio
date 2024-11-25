@@ -17,25 +17,34 @@
 
   .card {
     position: absolute;
-    top: calc(30px + 10vmin + 40pt + 10px); /* Positions it below the container */
+    top: calc(20px + 10vmin + 40pt + 10px); /* Positions it below the container */
     width: 100%; /* Optional, adjust width as needed */
     max-width: 500px;
     min-height: 200px;
-    left: 35px; /* Align with the container's left edge */
+    left: 40px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: transparent !important;
-    border: 1px solid rgba(255, 255, 255, .25);
+    background-color: transparent !important; /* Changed from transparent */
+    border: 1px solid rgba(115, 18, 194, 0.8) !important; /* Retained border color from 2nd */
     border-radius: 20px;
-    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.6), 0 0 10px 2px rgba(105, 7, 185, 0.8) !important; /* Combined shadow effects */
     backdrop-filter: blur(15px);
     z-index: 1; /* Ensure card appears on top of other content */
-  }
+    box-sizing: border-box;
+    transition: transform 0.3s, box-shadow 0.3s; /* Add transition for smooth effects */
+    text-align: center; /* Center align text */
+    color: white; /* Ensure text color is white */
+}
   
   .card-footer {
     font-size: 0.65em;
     color: #446;
+  }
+
+  .card:hover {
+    transform: translateZ(10px) scale(1.05);
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.8);
   }
 
   #container {
@@ -115,6 +124,17 @@
   .test {
       padding: 0 32.5px; /* Mobile-specific padding */
   }
+
+  .card {
+    position: relative;
+    left: 0;
+    top: -50px;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
   #container {
     display:none;
 }
@@ -142,33 +162,9 @@
     box-shadow: 0 0 5px rgba(138, 43, 226, 0.8), 0 0 25px rgba(138, 43, 226, 0.5);
     pointer-events: none; /* Ensure the border doesn't block interactions */
   }
-  
-  .cardContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70%;
-    z-index: 1;
-  }
-  
-  .card {
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.85);
-    border: 1px solid transparent;
-    border-radius: 20px;
-    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.6);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-    transform: translateZ(0) scale(1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    text-align: center; /* Center align text */
-    color: white;
-  }
-  
-  .card:hover {
-    transform: translateZ(10px) scale(1.05);
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.8);
-  }
+
+
+
   
   .leftCard {
     width: 60%;
