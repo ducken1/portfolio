@@ -126,11 +126,16 @@ animate();
   <span id="text2"></span>
 </div>
 
-       {/* Your new card here */}
-       <div className="card">
-          <p> blablabla <strong>HEHEHEHE</strong> hihihi.</p>
-          <p className="card-footer">12345</p>
-        </div>
+<div className="cardContainer">
+  <div className="card">
+    <p>blablabla <strong>HEHEHEHE</strong> hihihi.</p>
+    <p className="card-footer">12345</p>
+  </div>
+  <div className="card">
+    <p>blablanls <strong>HEHEHEHE</strong> hihihi.</p>
+    <p className="card-footer">12345</p>
+  </div>
+</div>
         
 <svg id="filters">
         <defs>

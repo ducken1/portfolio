@@ -15,26 +15,34 @@
     background-color: #000; /* Fallback background */
   }
 
-  .card {
-    position: absolute;
-    top: calc(20px + 10vmin + 40pt + 10px); /* Positions it below the container */
-    width: 100%; /* Optional, adjust width as needed */
-    max-width: 500px;
-    min-height: 200px;
-    left: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: transparent !important; /* Changed from transparent */
-    border: 1px solid rgba(115, 18, 194, 0.8) !important; /* Retained border color from 2nd */
-    border-radius: 20px;
-    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.6), 0 0 10px 2px rgba(105, 7, 185, 0.8) !important; /* Combined shadow effects */
-    backdrop-filter: blur(15px);
-    z-index: 1; /* Ensure card appears on top of other content */
-    box-sizing: border-box;
-    transition: transform 0.3s, box-shadow 0.3s; /* Add transition for smooth effects */
-    text-align: center; /* Center align text */
-    color: white; /* Ensure text color is white */
+ .cardContainer {
+  position: relative;
+  display: flex;
+  gap: 20px; /* Adds space between cards */
+  justify-content: center; /* Centers the cards horizontally */
+  flex-wrap: wrap; /* Allows cards to wrap to the next row on smaller screens */
+  padding: 20px; /* Optional: Adds some padding around the container */
+}
+
+.card {
+  flex: 1 1 45%; /* Each card takes up about 45% of the width (adjust as needed) */
+  max-width: 500px; /* Optional: Ensures card doesn’t exceed 500px width */
+  min-width: 300px; /* Optional: Ensures card doesn’t shrink too much on small screens */
+  min-height: 200px;
+  margin: 10px; /* Adds space around each card */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: transparent !important;
+  border: 1px solid rgba(115, 18, 194, 0.8) !important;
+  border-radius: 20px;
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.6), 0 0 10px 2px rgba(105, 7, 185, 0.8) !important;
+  backdrop-filter: blur(15px);
+  z-index: 1;
+  box-sizing: border-box;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
+  color: white;
 }
   
   .card-footer {
@@ -130,9 +138,9 @@
   }
 
   .card {
-    position: relative;
     left: 0;
-    top: -50px;
+    min-height: 150px;
+    max-width: 50px;
   }
 
   .card:hover {
