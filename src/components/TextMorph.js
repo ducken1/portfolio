@@ -16,11 +16,11 @@ const TextMorph = () => {
           text2: document.getElementById("text2")
       };
     
-        const morphTime = 1; // Duration of morphing in seconds
-        const cooldownTime = 0.25; // Duration of cooldown in seconds
+        const morphTime = 1.3; // Duration of morphing in seconds
+        const cooldownTime = 0.33; // Duration of cooldown in seconds
     
         let textIndex = texts.length - 1;
-        let morph = 0; // Time spent morphing
+        let morph = 0.3; // Time spent morphing
         let cooldown = cooldownTime; // Cooldown timer
         let time = new Date();
     
