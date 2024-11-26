@@ -161,7 +161,9 @@
     transform: none;
   }
 
-
+  #container {
+    display:none;
+}
 }
    
   .vantaBackground {
