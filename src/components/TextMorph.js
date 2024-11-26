@@ -7,7 +7,6 @@ const TextMorph = () => {
         const texts = [
           "Frontend Magic",
           "Backend Logic",
-          "Database Insights",
           "The Full-Stack Quest",
         ];
     
