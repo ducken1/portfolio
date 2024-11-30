@@ -76,9 +76,9 @@ useEffect(() => {
 
     // Initialize the console text animation
     consoleText(
-      ['<Innovation begins where the semicolon ends>', '<Software engineers: turning caffeine into functions>', '<If code is poetry, we are writing an epic every day>', '<Ctrl+C and Ctrl+V — the foundation of modern programming>'],
+      ['<Innovation begins where the semicolon ends>', '<Software engineers: turning caffeine into functions>', '<Ctrl+C and Ctrl+V — the foundation of modern programming>'],
       'text',
-      ['hotpink', 'lightcoral', 'sandybrown', 'indianred']
+      ['hotpink', 'lightcoral', 'indianred']
     );
   }, []);
 }

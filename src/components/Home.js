@@ -57,7 +57,14 @@ function Home() {
 {/*           <p>
           Code is more than syntax—it's a way to shape the future. With JavaScript, Python, and C#, I craft solutions that bridge ideas to reality. Every project is an opportunity to innovate, refine, and grow
           </p> */}
-          <p className="card-footer">Maribor / Ptuj / Slovenska Bistrica</p>
+
+<div className="footer-container">
+<div className="spacer"></div>  {/* Spacer element */}
+  <p className="card-footer">Maribor / Ptuj</p>
+  <p className="cv-link">
+    <a href="/cv.pdf" className="cv-text" target="_blank" rel="noopener noreferrer">View CV</a>
+  </p>
+</div>
         </div>
       </div>
         
